@@ -12,94 +12,10 @@
 // 1.54'' EPD Module
 GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(/*CS=5*/ 5, /*DC=*/14, /*RES=*/12, /*BUSY=*/15)); // GDEH0154D67 200x200, SSD1681
 
-const char HelloWorld[] = "Hello World!";
-const char HelloWeACtStudio[] = "WeAct Studio";
-
-void helloWorld()
-{
-  display.setRotation(1);
-  display.setFont(&FreeMonoBold9pt7b);
-  display.setTextColor(GxEPD_BLACK);
-  int16_t tbx, tby;
-  uint16_t tbw, tbh;
-  display.getTextBounds(HelloWorld, 0, 0, &tbx, &tby, &tbw, &tbh);
-  // center the bounding box by transposition of the origin:
-  uint16_t x = ((display.width() - tbw) / 2) - tbx;
-  uint16_t y = ((display.height() - tbh) / 2) - tby;
-  display.setFullWindow();
-  display.firstPage();
-  do
-  {
-    display.fillScreen(GxEPD_WHITE);
-    display.setCursor(x, y - tbh);
-    display.print(HelloWorld);
-    display.setTextColor(display.epd2.hasColor ? GxEPD_RED : GxEPD_BLACK);
-    display.getTextBounds(HelloWeACtStudio, 0, 0, &tbx, &tby, &tbw, &tbh);
-    x = ((display.width() - tbw) / 2) - tbx;
-    display.setCursor(x, y + tbh);
-    display.print(HelloWeACtStudio);
-  } while (display.nextPage());
-}
-
-void helloFullScreenPartialMode()
-{
-  // Serial.println("helloFullScreenPartialMode");
-  const char fullscreen[] = "full screen update";
-  const char fpm[] = "fast partial mode";
-  const char spm[] = "slow partial mode";
-  const char npm[] = "no partial mode";
-  display.setPartialWindow(0, 0, display.width(), display.height());
-  display.setRotation(1);
-  display.setFont(&FreeMonoBold9pt7b);
-  if (display.epd2.WIDTH < 104)
-    display.setFont(0);
-  display.setTextColor(GxEPD_BLACK);
-  const char *updatemode;
-  if (display.epd2.hasFastPartialUpdate)
-  {
-    updatemode = fpm;
-  }
-  else if (display.epd2.hasPartialUpdate)
-  {
-    updatemode = spm;
-  }
-  else
-  {
-    updatemode = npm;
-  }
-  // do this outside of the loop
-  int16_t tbx, tby;
-  uint16_t tbw, tbh;
-  // center update text
-  display.getTextBounds(fullscreen, 0, 0, &tbx, &tby, &tbw, &tbh);
-  uint16_t utx = ((display.width() - tbw) / 2) - tbx;
-  uint16_t uty = ((display.height() / 4) - tbh / 2) - tby;
-  // center update mode
-  display.getTextBounds(updatemode, 0, 0, &tbx, &tby, &tbw, &tbh);
-  uint16_t umx = ((display.width() - tbw) / 2) - tbx;
-  uint16_t umy = ((display.height() * 3 / 4) - tbh / 2) - tby;
-  // center HelloWorld
-  display.getTextBounds(HelloWorld, 0, 0, &tbx, &tby, &tbw, &tbh);
-  uint16_t hwx = ((display.width() - tbw) / 2) - tbx;
-  uint16_t hwy = ((display.height() - tbh) / 2) - tby;
-  display.firstPage();
-  do
-  {
-    display.fillScreen(GxEPD_WHITE);
-    display.setCursor(hwx, hwy);
-    display.print(HelloWorld);
-    display.setCursor(utx, uty);
-    display.print(fullscreen);
-    display.setCursor(umx, umy);
-    display.print(updatemode);
-  } while (display.nextPage());
-  // Serial.println("helloFullScreenPartialMode done");
-}
-
 void showPartialUpdate()
 {
   // some useful background
-  helloWorld();
+  // helloWorld();
   // use asymmetric values for test
   uint16_t box_x = 10;
   uint16_t box_y = 15;
@@ -163,9 +79,6 @@ void showPartialUpdate()
 void setup()
 {
   display.init(115200, true, 50, false);
-  helloWorld();
-  helloFullScreenPartialMode();
-  delay(1000);
   if (display.epd2.hasFastPartialUpdate)
   {
     showPartialUpdate();
