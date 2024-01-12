@@ -14,9 +14,6 @@ GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(/*CS=5*
 
 void showPartialUpdate()
 {
-  // some useful background
-  // helloWorld();
-  // use asymmetric values for test
   uint16_t box_x = 10;
   uint16_t box_y = 15;
   uint16_t box_w = 70;
