@@ -15,13 +15,17 @@ GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(/*CS=5*
 void showPartialUpdate()
 {
   uint16_t box_x = 10, box_y = 15, box_w = 70, box_h = 20;
-  uint16_t cursor_y = (display.epd2.WIDTH < 104) ? box_y + 6 : box_y + box_h - 6;
+  uint16_t cursor_y = box_y + box_h - 6;
   float value = 13.95;
-  uint16_t incr = display.epd2.hasFastPartialUpdate ? 1 : 3;
+  uint16_t incr = 1;
 
   display.setFont(&FreeMonoBold9pt7b);
+
   if (display.epd2.WIDTH < 104)
+  {
     display.setFont(0);
+  }
+
   display.setTextColor(GxEPD_BLACK);
 
   display.setRotation(3);
