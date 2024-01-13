@@ -5,7 +5,7 @@
 
 #include <GxEPD2_BW.h>
 #include <GxEPD2_3C.h>
-#include <Fonts/FreeMonoBold9pt7b.h>
+#include <Fonts/FreeMonoBold12pt7b.h>
 
 // ESP32 CS(SS)=5,SCL(SCK)=18,SDA(MOSI)=23,BUSY=15,RES(RST)=2,DC=0
 
@@ -19,7 +19,7 @@ void showPartialUpdate()
   float value = 13.95;
   uint16_t incr = 1;
 
-  display.setFont(&FreeMonoBold9pt7b);
+  display.setFont(&FreeMonoBold12pt7b);
 
   if (display.epd2.WIDTH < 104)
   {
@@ -46,7 +46,7 @@ void showPartialUpdate()
     {
       display.fillRect(box_x, box_y, box_w, box_h, GxEPD_WHITE);
       display.setCursor(box_x, cursor_y);
-      display.print(value * i, 2);
+      display.print(value * i, 1);
     } while (display.nextPage());
     delay(1000);
   }
