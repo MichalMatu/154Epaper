@@ -37,7 +37,6 @@ void showPartialUpdate()
   {
     display.fillScreen(GxEPD_WHITE);
   } while (display.nextPage());
-  delay(1000);
 
   for (uint16_t i = 1; i <= 10; i += incr)
   {
