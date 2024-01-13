@@ -31,6 +31,14 @@ void showPartialUpdate()
   display.setRotation(3);
   display.setPartialWindow(box_x, box_y, box_w, box_h);
 
+  // Perform a full update to clear the display initially
+  display.firstPage();
+  do
+  {
+    display.fillScreen(GxEPD_WHITE);
+  } while (display.nextPage());
+  delay(1000);
+
   for (uint16_t i = 1; i <= 10; i += incr)
   {
     display.firstPage();
