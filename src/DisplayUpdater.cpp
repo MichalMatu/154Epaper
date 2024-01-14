@@ -18,11 +18,6 @@ void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t 
 
     display.setFont(&FreeMonoBold12pt7b);
 
-    if (display.epd2.WIDTH < 104)
-    {
-        display.setFont(0);
-    }
-
     display.setTextColor(GxEPD_BLACK);
 
     display.setRotation(3);
