@@ -21,8 +21,8 @@ DisplayUpdater displayUpdater;
 #define BME68X_I2C_ADDR_HIGH 0x77
 
 // Define gas resistance normalization parameters
-const float minResistance = 10000.0;  // Replace with your actual minimum resistance
-const float maxResistance = 500000.0; // Replace with your actual maximum resistance
+const float minResistance = 60000.0;  // Replace with your actual minimum resistance
+const float maxResistance = 100000.0; // Replace with your actual maximum resistance
 
 GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(5, 14, 12, 15));
 
@@ -58,7 +58,7 @@ void setup()
 float normalizeGasResistance(float gasResistance)
 {
   gasResistance = constrain(gasResistance, minResistance, maxResistance);
-  return map(gasResistance, minResistance, maxResistance, 0, 100);
+  return map(gasResistance, minResistance, maxResistance, 100, 0);
 }
 
 void loop()
@@ -71,6 +71,8 @@ void loop()
     displayUpdater.showPartialUpdate(10, 40, 70, 20, iaqSensor.humidity);
     displayUpdater.showPartialUpdate(10, 65, 70, 20, iaqSensor.pressure);
     displayUpdater.showPartialUpdate(10, 90, 70, 20, normalizedGasResistance);
+    // gasresistance
+    displayUpdater.showPartialUpdate(10, 115, 70, 20, iaqSensor.gasResistance);
   }
   else
   {
