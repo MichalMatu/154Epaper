@@ -7,12 +7,25 @@
 #include <GxEPD2_3C.h>
 #include <Fonts/FreeMonoBold12pt7b.h>
 
+#include "DisplayUpdater.h"
+DisplayUpdater displayUpdater;
+
 // ESP32 CS(SS)=5,SCL(SCK)=18,SDA(MOSI)=23,BUSY=15,RES(RST)=2,DC=0
 
 // 1.54'' EPD Module
 GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(/*CS=5*/ 5, /*DC=*/14, /*RES=*/12, /*BUSY=*/15)); // GDEH0154D67 200x200, SSD1681
 
-void showPartialUpdate()
+DisplayUpdater::DisplayUpdater()
+{
+  // Constructor code, if any
+}
+
+DisplayUpdater::~DisplayUpdater()
+{
+  // Destructor code, if any
+}
+
+void DisplayUpdater::showPartialUpdate()
 {
   uint16_t box_x = 10, box_y = 15, box_w = 70, box_h = 20;
   uint16_t cursor_y = box_y + box_h - 6;
@@ -56,7 +69,7 @@ void setup()
   display.init(115200, true, 50, false);
   if (display.epd2.hasFastPartialUpdate)
   {
-    showPartialUpdate();
+    displayUpdater.showPartialUpdate();
     delay(1000);
   }
   display.hibernate();
