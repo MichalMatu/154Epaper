@@ -34,10 +34,31 @@ void taskCore1(void *parameter)
 
 void setup()
 {
+  // serial port initialization
+  Serial.begin(115200);
   display.init(115200, true, 50, false);
   displayUpdater.showPartialUpdate(10, 15, 70, 20, 13.95); // Example values
   displayUpdater.showPartialUpdate(10, 40, 70, 20, 13.95); // Example values
   display.hibernate();
+
+  // Create and start tasks
+  xTaskCreatePinnedToCore(
+      taskCore0,   // Function to run on core 0
+      "TaskCore0", // Name of the task
+      10000,       // Stack size (bytes)
+      NULL,        // Parameter to pass to the function
+      1,           // Task priority
+      NULL,        // Task handle
+      0);          // Core number (0 or 1)
+
+  xTaskCreatePinnedToCore(
+      taskCore1,   // Function to run on core 1
+      "TaskCore1", // Name of the task
+      10000,       // Stack size (bytes)
+      NULL,        // Parameter to pass to the function
+      1,           // Task priority
+      NULL,        // Task handle
+      1);          // Core number (0 or 1)
 }
 
 void loop()
