@@ -14,7 +14,7 @@ public:
     DisplayUpdater();
     ~DisplayUpdater();
 
-    void showPartialUpdate();
+    void showPartialUpdate(uint16_t x, uint16_t y, uint16_t w, uint16_t h, float value);
 
 private:
     GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display;
