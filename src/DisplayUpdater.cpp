@@ -37,5 +37,5 @@ void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t 
         display.setCursor(box_x, cursor_y);
         display.print(value, 1);
     } while (display.nextPage());
-    delay(1000);
+    // delay(1000);
 }

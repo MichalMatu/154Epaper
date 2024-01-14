@@ -12,14 +12,31 @@ DisplayUpdater displayUpdater;
 
 GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(5, 14, 12, 15));
 
+// Function to be executed on core 0
+void taskCore0(void *parameter)
+{
+  for (;;)
+  {
+    Serial.println("Task on Core 0");
+    delay(1000);
+  }
+}
+
+// Function to be executed on core 1
+void taskCore1(void *parameter)
+{
+  for (;;)
+  {
+    Serial.println("Task on Core 1");
+    delay(1000);
+  }
+}
+
 void setup()
 {
   display.init(115200, true, 50, false);
-  if (display.epd2.hasFastPartialUpdate)
-  {
-    displayUpdater.showPartialUpdate(10, 15, 70, 20, 13.95); // Example values
-    delay(1000);
-  }
+  displayUpdater.showPartialUpdate(10, 15, 70, 20, 13.95); // Example values
+  displayUpdater.showPartialUpdate(10, 40, 70, 20, 13.95); // Example values
   display.hibernate();
 }
 
