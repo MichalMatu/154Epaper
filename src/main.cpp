@@ -38,9 +38,9 @@ void loop()
   Serial.print("Humidity:");
   Serial.println(humidity);
 
-  displayUpdater.showPartialUpdate(10, 15, 70, 20, temperature);
-  displayUpdater.showPartialUpdate(10, 40, 70, 20, humidity);
-  displayUpdater.showPartialUpdate(10, 65, 70, 20, co2);
+  displayUpdater.showPartialUpdate(60, 10, 120, 40, temperature);
+  displayUpdater.showPartialUpdate(60, 80, 120, 40, humidity);
+  displayUpdater.showPartialUpdate(60, 150, 120, 40, co2);
 
   delay(10000);
 }
