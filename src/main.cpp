@@ -1,11 +1,4 @@
 #define ENABLE_GxEPD2_GFX 0
-
-// #include <GxEPD2_BW.h>
-// #include <GxEPD2_3C.h>
-// #include <Fonts/FreeMonoBold12pt7b.h>
-
-#include <Adafruit_AHTX0.h>
-
 #include "DisplayUpdater.h"
 
 DisplayUpdater displayUpdater;
