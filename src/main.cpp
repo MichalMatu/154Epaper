@@ -31,17 +31,15 @@ void setup()
   Serial.println("AHT10 or AHT20 found");
 
   display.init(115200, true, 50, false);
-  displayUpdater.showPartialUpdate(10, 15, 70, 20, 13.95); // Example values
-  displayUpdater.showPartialUpdate(10, 40, 70, 20, 13.95); // Example values
-  display.hibernate();
 }
 
 void loop()
 {
-  // call the getTemperature() and getHumidity() methods from the SensorReadings class
-  // and pass the Adafruit_AHTX0 object to the constructor
+
   float temperature = sensorReadings.getTemperature();
   float humidity = sensorReadings.getHumidity();
+  displayUpdater.showPartialUpdate(10, 15, 70, 20, temperature);
+  displayUpdater.showPartialUpdate(10, 40, 70, 20, humidity);
 
   delay(10000);
 }
