@@ -104,6 +104,30 @@ void setup()
 }
 
 int menu = 0;
+// Read Measurement
+uint16_t co2 = 0;
+float temperature = 0.0f;
+float humidity = 0.0f;
+
+void menuFunc(int menu)
+{
+  switch (menu)
+  {
+  case 0:
+    displayUpdater.showPartialUpdate(10, 10, 120, 40, temperature);
+    displayUpdater.showPartialUpdate(10, 70, 120, 40, humidity);
+    displayUpdater.showPartialUpdate(10, 130, 120, 40, co2);
+    break;
+  case 1:
+    displayUpdater.showPartialUpdate(10, 70, 120, 40, 0);
+    break;
+  case 2:
+    displayUpdater.showPartialUpdate(10, 130, 120, 40, 0);
+    break;
+  default:
+    break;
+  }
+}
 
 void loop()
 {
@@ -111,10 +135,6 @@ void loop()
 
   delay(100);
 
-  // Read Measurement
-  uint16_t co2 = 0;
-  float temperature = 0.0f;
-  float humidity = 0.0f;
   readSensorValues(co2, temperature, humidity);
 
   if (co2 != 0)
@@ -129,8 +149,7 @@ void loop()
     Serial.println(humidity);
   }
 
-  displayUpdater.showPartialUpdate(10, 10, 120, 40, temperature);
-  displayUpdater.showPartialUpdate(10, 70, 120, 40, humidity);
-  displayUpdater.showPartialUpdate(10, 130, 120, 40, co2);
+  menuFunc(menu);
+
   delay(10000);
 }
