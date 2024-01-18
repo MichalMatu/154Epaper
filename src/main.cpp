@@ -129,27 +129,42 @@ void menuFunc(int menu)
   }
 }
 
+unsigned long previousMillis = 0; // Variable to store the last time the loop was executed
+const long interval = 10000;      // Interval for reading sensor values in milliseconds
+const long menuInterval = 10;     // Interval for running the menu function in milliseconds
+
 void loop()
 {
-  uint16_t error;
+  unsigned long currentMillis = millis(); // Get the current time
 
-  delay(100);
-
-  readSensorValues(co2, temperature, humidity);
-
-  if (co2 != 0)
+  // Check if it's time to read sensor values
+  if (currentMillis - previousMillis >= interval)
   {
-    Serial.print("Co2:");
-    Serial.print(co2);
-    Serial.print("\t");
-    Serial.print("Temperature:");
-    Serial.print(temperature);
-    Serial.print("\t");
-    Serial.print("Humidity:");
-    Serial.println(humidity);
+    previousMillis = currentMillis; // Save the last time the loop was executed
+
+    uint16_t error;
+
+    readSensorValues(co2, temperature, humidity);
+
+    if (co2 != 0)
+    {
+      Serial.print("Co2:");
+      Serial.print(co2);
+      Serial.print("\t");
+      Serial.print("Temperature:");
+      Serial.print(temperature);
+      Serial.print("\t");
+      Serial.print("Humidity:");
+      Serial.println(humidity);
+    }
   }
 
-  menuFunc(menu);
+  // Check if it's time to run the menu function
+  if (currentMillis - previousMillis >= menuInterval)
+  {
+    menuFunc(menu);
 
-  delay(10000);
+    // Reset the timer for the menu function
+    previousMillis = currentMillis;
+  }
 }
