@@ -1,13 +1,10 @@
 #include <Arduino.h>
 #include <SensirionI2CScd4x.h>
 #include <Wire.h>
-#define ENABLE_GxEPD2_GFX 0
 #include "DisplayUpdater.h"
-DisplayUpdater displayUpdater;
-// ESP32 CS(SS)=5, SCL(SCK)=18, SDA(MOSI)=23, BUSY=15, RES(RST)=12, DC=14
-GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT>
-    display(GxEPD2_154_D67(5, 14, 12, 15));
 
+DisplayUpdater displayUpdater;
+GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(5, 14, 12, 15));
 SensirionI2CScd4x scd4x;
 
 void printUint16Hex(uint16_t value)
@@ -27,9 +24,39 @@ void printSerialNumber(uint16_t serial0, uint16_t serial1, uint16_t serial2)
   Serial.println();
 }
 
+void readSensorValues(uint16_t &co2, float &temperature, float &humidity)
+{
+  delay(100);
+
+  // Read Measurement
+  bool isDataReady = false;
+  uint16_t error = scd4x.getDataReadyFlag(isDataReady);
+  if (error)
+  {
+    Serial.print("Error getting data ready flag: ");
+    Serial.println(error);
+    return;
+  }
+
+  if (!isDataReady)
+  {
+    return;
+  }
+
+  error = scd4x.readMeasurement(co2, temperature, humidity);
+  if (error)
+  {
+    Serial.print("Error reading measurement: ");
+    Serial.println(error);
+  }
+  else if (co2 == 0)
+  {
+    Serial.println("Invalid sample detected, skipping.");
+  }
+}
+
 void setup()
 {
-
   Serial.begin(115200);
 
   display.init(115200, true, 50, false);
@@ -42,7 +69,6 @@ void setup()
   Wire.begin();
 
   uint16_t error;
-  char errorMessage[256];
 
   scd4x.begin(Wire);
 
@@ -50,20 +76,16 @@ void setup()
   error = scd4x.stopPeriodicMeasurement();
   if (error)
   {
-    Serial.print("Error trying to execute stopPeriodicMeasurement(): ");
-    errorToString(error, errorMessage, 256);
-    Serial.println(errorMessage);
+    Serial.print("Error stopping periodic measurement: ");
+    Serial.println(error);
   }
 
-  uint16_t serial0;
-  uint16_t serial1;
-  uint16_t serial2;
+  uint16_t serial0, serial1, serial2;
   error = scd4x.getSerialNumber(serial0, serial1, serial2);
   if (error)
   {
-    Serial.print("Error trying to execute getSerialNumber(): ");
-    errorToString(error, errorMessage, 256);
-    Serial.println(errorMessage);
+    Serial.print("Error getting serial number: ");
+    Serial.println(error);
   }
   else
   {
@@ -74,9 +96,8 @@ void setup()
   error = scd4x.startPeriodicMeasurement();
   if (error)
   {
-    Serial.print("Error trying to execute startPeriodicMeasurement(): ");
-    errorToString(error, errorMessage, 256);
-    Serial.println(errorMessage);
+    Serial.print("Error starting periodic measurement: ");
+    Serial.println(error);
   }
 
   Serial.println("Waiting for first measurement... (5 sec)");
@@ -85,7 +106,6 @@ void setup()
 void loop()
 {
   uint16_t error;
-  char errorMessage[256];
 
   delay(100);
 
@@ -93,31 +113,9 @@ void loop()
   uint16_t co2 = 0;
   float temperature = 0.0f;
   float humidity = 0.0f;
-  bool isDataReady = false;
-  error = scd4x.getDataReadyFlag(isDataReady);
-  if (error)
-  {
-    Serial.print("Error trying to execute getDataReadyFlag(): ");
-    errorToString(error, errorMessage, 256);
-    Serial.println(errorMessage);
-    return;
-  }
-  if (!isDataReady)
-  {
-    return;
-  }
-  error = scd4x.readMeasurement(co2, temperature, humidity);
-  if (error)
-  {
-    Serial.print("Error trying to execute readMeasurement(): ");
-    errorToString(error, errorMessage, 256);
-    Serial.println(errorMessage);
-  }
-  else if (co2 == 0)
-  {
-    Serial.println("Invalid sample detected, skipping.");
-  }
-  else
+  readSensorValues(co2, temperature, humidity);
+
+  if (co2 != 0)
   {
     Serial.print("Co2:");
     Serial.print(co2);
