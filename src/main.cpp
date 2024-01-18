@@ -103,7 +103,7 @@ void setup()
   Serial.println("Waiting for first measurement... (5 sec)");
 }
 
-int menu = 0;
+int menu = 1;
 // Read Measurement
 uint16_t co2 = 0;
 float temperature = 0.0f;
@@ -119,7 +119,42 @@ void menuFunc(int menu)
     displayUpdater.showPartialUpdate(10, 130, 120, 40, co2);
     break;
   case 1:
-    displayUpdater.showPartialUpdate(10, 70, 120, 40, 0);
+    display.firstPage();
+    do
+    {
+      // Clear the screen
+      display.fillScreen(GxEPD_WHITE);
+
+      // Draw a filled rectangle
+      display.fillRect(10, 10, 50, 30, GxEPD_BLACK);
+
+      // Draw a line
+      display.drawLine(70, 10, 120, 40, GxEPD_BLACK);
+
+      // Draw a circle
+      display.drawCircle(180, 25, 15, GxEPD_BLACK);
+
+      // Draw text
+      display.setCursor(10, 80);
+      display.print("Hello, e-paper!");
+
+      // Draw a filled triangle
+      int16_t x0 = 70, y0 = 80, x1 = 120, y1 = 110, x2 = 170, y2 = 80;
+      display.drawTriangle(x0, y0, x1, y1, x2, y2, GxEPD_BLACK);
+
+      // Draw a bitmap (example: smiley face)
+      const uint8_t smileyBitmap[] = {
+          B00111100,
+          B01000010,
+          B10100101,
+          B10000001,
+          B10100101,
+          B10011001,
+          B01000010,
+          B00111100};
+      display.drawBitmap(180, 80, smileyBitmap, 8, 8, GxEPD_BLACK);
+
+    } while (display.nextPage());
     break;
   case 2:
     displayUpdater.showPartialUpdate(10, 130, 120, 40, 0);
