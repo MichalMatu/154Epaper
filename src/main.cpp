@@ -103,6 +103,8 @@ void setup()
   Serial.println("Waiting for first measurement... (5 sec)");
 }
 
+int menu = 0;
+
 void loop()
 {
   uint16_t error;
