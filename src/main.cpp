@@ -129,27 +129,35 @@ void menuFunc(int menu)
   }
 }
 
+unsigned long previousMillis = 0;
+const long interval = 10000; // Set the interval to 10 seconds
+
 void loop()
 {
-  uint16_t error;
 
-  delay(100);
+  unsigned long currentMillis = millis();
 
-  readSensorValues(co2, temperature, humidity);
-
-  if (co2 != 0)
+  if (currentMillis - previousMillis >= interval)
   {
-    Serial.print("Co2:");
-    Serial.print(co2);
-    Serial.print("\t");
-    Serial.print("Temperature:");
-    Serial.print(temperature);
-    Serial.print("\t");
-    Serial.print("Humidity:");
-    Serial.println(humidity);
+    // Save the current time
+    previousMillis = currentMillis;
+    uint16_t error;
+    readSensorValues(co2, temperature, humidity);
+
+    if (co2 != 0)
+    {
+      Serial.print("Co2:");
+      Serial.print(co2);
+      Serial.print("\t");
+      Serial.print("Temperature:");
+      Serial.print(temperature);
+      Serial.print("\t");
+      Serial.print("Humidity:");
+      Serial.println(humidity);
+    }
+
+    menuFunc(menu);
+
+    // Your code to execute every 10 seconds goes here
   }
-
-  menuFunc(menu);
-
-  delay(10000);
 }
