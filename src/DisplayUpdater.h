@@ -6,7 +6,7 @@
 #include <Arduino.h>
 #include <GxEPD2_BW.h>
 #include <GxEPD2_3C.h>
-#include <Fonts/FreeMonoBold24pt7b.h>
+#include <Fonts/FreeMonoBold18pt7b.h>
 
 class DisplayUpdater
 {

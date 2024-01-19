@@ -115,9 +115,9 @@ void menuFunc(int menu)
   switch (menu)
   {
   case 0:
-    displayUpdater.showPartialUpdate(10, 10, 110, 40, temperature, "C");
-    displayUpdater.showPartialUpdate(10, 70, 110, 40, humidity, "%");
-    displayUpdater.showPartialUpdate(10, 130, 110, 40, co2, "ppm");
+    displayUpdater.showPartialUpdate(0, 10, 110, 40, temperature, "C");
+    displayUpdater.showPartialUpdate(0, 70, 110, 40, humidity, "%");
+    displayUpdater.showPartialUpdate(0, 130, 160, 40, co2, "ppm");
 
     // display T & H & CO2 after value
 

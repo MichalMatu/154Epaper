@@ -16,7 +16,7 @@ void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t 
 {
     const uint16_t cursor_y = box_y + box_h - 6;
 
-    display.setFont(&FreeMonoBold24pt7b);
+    display.setFont(&FreeMonoBold18pt7b);
 
     display.setTextColor(GxEPD_BLACK);
 
@@ -36,6 +36,8 @@ void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t 
         display.fillRect(box_x, box_y, box_w, box_h, GxEPD_WHITE);
         display.setCursor(box_x, cursor_y);
         display.print(value, 0);
+        display.print(" "); // Add a space between the value and unit
+        display.print(unit);
     } while (display.nextPage());
     // delay(1000);
 }
