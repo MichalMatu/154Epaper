@@ -103,7 +103,7 @@ void setup()
   Serial.println("Waiting for first measurement... (5 sec)");
 }
 
-int menu = 1;
+int menu = 0;
 // Read Measurement
 uint16_t co2 = 0;
 float temperature = 0.0f;
@@ -116,7 +116,14 @@ void menuFunc(int menu)
   case 0:
     displayUpdater.showPartialUpdate(10, 10, 120, 40, temperature);
     displayUpdater.showPartialUpdate(10, 70, 120, 40, humidity);
-    displayUpdater.showPartialUpdate(10, 130, 120, 40, co2);
+    if (co2 < 1000)
+    {
+      displayUpdater.showPartialUpdate(10, 130, 100, 40, co2);
+    }
+    else
+    {
+      displayUpdater.showPartialUpdate(10, 130, 120, 40, co2);
+    }
     break;
   case 1:
     display.firstPage();
