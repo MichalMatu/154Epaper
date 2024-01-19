@@ -3,8 +3,6 @@
 #include <Wire.h>
 #include "DisplayUpdater.h"
 
-#include "Bitmaps.h" // Include the Bitmaps header file
-
 DisplayUpdater displayUpdater;
 GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(5, 14, 12, 15));
 SensirionI2CScd4x scd4x;
@@ -117,16 +115,9 @@ void menuFunc(int menu)
   switch (menu)
   {
   case 0:
-    displayUpdater.showPartialUpdate(10, 10, 120, 40, temperature);
-    displayUpdater.showPartialUpdate(10, 70, 120, 40, humidity);
-    if (co2 < 1000)
-    {
-      displayUpdater.showPartialUpdate(10, 130, 100, 40, co2);
-    }
-    else
-    {
-      displayUpdater.showPartialUpdate(10, 130, 120, 40, co2);
-    }
+    displayUpdater.showPartialUpdate(10, 10, 110, 40, temperature);
+    displayUpdater.showPartialUpdate(10, 70, 110, 40, humidity);
+    displayUpdater.showPartialUpdate(10, 130, 110, 40, co2);
     break;
   case 1:
     display.firstPage();
@@ -152,9 +143,6 @@ void menuFunc(int menu)
       // Draw a filled triangle
       int16_t x0 = 70, y0 = 80, x1 = 120, y1 = 110, x2 = 170, y2 = 80;
       display.drawTriangle(x0, y0, x1, y1, x2, y2, GxEPD_BLACK);
-
-      // Draw a bitmap using the included header
-      display.drawBitmap(180, 80, smileyBitmap, 8, 8, GxEPD_BLACK);
 
     } while (display.nextPage());
     break;

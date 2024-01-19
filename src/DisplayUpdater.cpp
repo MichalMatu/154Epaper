@@ -1,7 +1,6 @@
 // DisplayUpdater.cpp
 
 #include "DisplayUpdater.h"
-#include "Bitmaps.h" // Include the Bitmaps header file
 
 DisplayUpdater::DisplayUpdater() : display(GxEPD2_154_D67(5, 14, 12, 15))
 {
@@ -36,7 +35,7 @@ void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t 
     {
         display.fillRect(box_x, box_y, box_w, box_h, GxEPD_WHITE);
         display.setCursor(box_x, cursor_y);
-        display.print(value, 1);
+        display.print(value, 0);
     } while (display.nextPage());
     // delay(1000);
 }
