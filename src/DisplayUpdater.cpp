@@ -1,6 +1,7 @@
 // DisplayUpdater.cpp
 
 #include "DisplayUpdater.h"
+#include "Bitmaps.h" // Include the Bitmaps header file
 
 DisplayUpdater::DisplayUpdater() : display(GxEPD2_154_D67(5, 14, 12, 15))
 {

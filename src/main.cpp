@@ -3,6 +3,8 @@
 #include <Wire.h>
 #include "DisplayUpdater.h"
 
+#include "Bitmaps.h" // Include the Bitmaps header file
+
 DisplayUpdater displayUpdater;
 GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display(GxEPD2_154_D67(5, 14, 12, 15));
 SensirionI2CScd4x scd4x;
@@ -111,6 +113,7 @@ float humidity = 0.0f;
 
 void menuFunc(int menu)
 {
+
   switch (menu)
   {
   case 0:
@@ -129,6 +132,7 @@ void menuFunc(int menu)
     display.firstPage();
     do
     {
+
       // Clear the screen
       display.fillScreen(GxEPD_WHITE);
 
@@ -149,16 +153,7 @@ void menuFunc(int menu)
       int16_t x0 = 70, y0 = 80, x1 = 120, y1 = 110, x2 = 170, y2 = 80;
       display.drawTriangle(x0, y0, x1, y1, x2, y2, GxEPD_BLACK);
 
-      // Draw a bitmap (example: smiley face)
-      const uint8_t smileyBitmap[] = {
-          B00111100,
-          B01000010,
-          B10100101,
-          B10000001,
-          B10100101,
-          B10011001,
-          B01000010,
-          B00111100};
+      // Draw a bitmap using the included header
       display.drawBitmap(180, 80, smileyBitmap, 8, 8, GxEPD_BLACK);
 
     } while (display.nextPage());
