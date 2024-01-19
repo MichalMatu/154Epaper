@@ -12,7 +12,7 @@ DisplayUpdater::~DisplayUpdater()
     // Destructor code, if any
 }
 
-void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t box_w, uint16_t box_h, float value)
+void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t box_w, uint16_t box_h, float value, String unit)
 {
     const uint16_t cursor_y = box_y + box_h - 6;
 

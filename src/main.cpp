@@ -115,9 +115,12 @@ void menuFunc(int menu)
   switch (menu)
   {
   case 0:
-    displayUpdater.showPartialUpdate(10, 10, 110, 40, temperature);
-    displayUpdater.showPartialUpdate(10, 70, 110, 40, humidity);
-    displayUpdater.showPartialUpdate(10, 130, 110, 40, co2);
+    displayUpdater.showPartialUpdate(10, 10, 110, 40, temperature, "C");
+    displayUpdater.showPartialUpdate(10, 70, 110, 40, humidity, "%");
+    displayUpdater.showPartialUpdate(10, 130, 110, 40, co2, "ppm");
+
+    // display T & H & CO2 after value
+
     break;
   case 1:
     display.firstPage();
@@ -146,9 +149,7 @@ void menuFunc(int menu)
 
     } while (display.nextPage());
     break;
-  case 2:
-    displayUpdater.showPartialUpdate(10, 130, 120, 40, 0);
-    break;
+
   default:
     break;
   }
