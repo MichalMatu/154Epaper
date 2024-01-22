@@ -115,9 +115,10 @@ void menuFunc(int menu)
   switch (menu)
   {
   case 0:
-    displayUpdater.showPartialUpdate(10, 10, 110, 40, temperature, "C");
-    displayUpdater.showPartialUpdate(10, 70, 110, 40, humidity, "%");
-    displayUpdater.showPartialUpdate(10, 130, 160, 40, co2, "ppm");
+    // x, y, width, height, value, unit, fontSize
+    displayUpdater.showPartialUpdate(10, 10, 110, 40, temperature, "C", 18);
+    displayUpdater.showPartialUpdate(10, 70, 110, 40, humidity, "%", 18);
+    displayUpdater.showPartialUpdate(10, 130, 160, 40, co2, "ppm", 18);
 
     // display T & H & CO2 after value
 
@@ -181,8 +182,10 @@ void loop()
       Serial.print("Humidity:");
       Serial.println(humidity);
     }
-
-    menuFunc(menu);
+    if (menu == 0)
+    {
+      menuFunc(menu);
+    }
 
     // Your code to execute every 10 seconds goes here
   }

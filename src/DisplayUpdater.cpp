@@ -12,12 +12,21 @@ DisplayUpdater::~DisplayUpdater()
     // Destructor code, if any
 }
 
-void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t box_w, uint16_t box_h, float value, String unit)
+void DisplayUpdater::showPartialUpdate(uint16_t box_x, uint16_t box_y, uint16_t box_w, uint16_t box_h, float value, String unit, int fontSize)
 {
     const uint16_t cursor_y = box_y + box_h - 6;
-
-    display.setFont(&FreeMonoBold18pt7b);
-
+    if (fontSize == 9)
+    {
+        display.setFont(&FreeMonoBold9pt7b);
+    }
+    else if (fontSize == 18)
+    {
+        display.setFont(&FreeMonoBold18pt7b);
+    }
+    else if (fontSize == 24)
+    {
+        display.setFont(&FreeMonoBold24pt7b);
+    }
     display.setTextColor(GxEPD_BLACK);
 
     display.setRotation(3);
